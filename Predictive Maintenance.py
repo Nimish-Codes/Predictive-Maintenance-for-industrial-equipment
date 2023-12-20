@@ -59,7 +59,3 @@ if any(y_pred == 1):
     print('Maintenance alert: Predicted equipment failure. Schedule preventive maintenance.')
 else:
     print('No maintenance needed.')
-
-# Optionally, you can save the trained model for future use
-# import joblib
-# joblib.dump(model, 'predictive_maintenance_model.joblib')
