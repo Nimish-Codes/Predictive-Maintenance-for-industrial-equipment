@@ -6,6 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+import streamlit as st
 
 # Generate synthetic predictive maintenance dataset
 np.random.seed(42)
@@ -45,17 +46,31 @@ model = Pipeline([
 # Train the model
 model.fit(X_train, y_train)
 
+# Streamlit App
+st.title('Predictive Maintenance Model')
+st.write('This app predicts equipment failure based on synthetic sensor data.')
+
+# Display sample data
+st.subheader('Sample Data:')
+st.write(synthetic_data.head())
+
 # Make predictions on the test set
 y_pred = model.predict(X_test)
 
 # Evaluate the model
 accuracy = accuracy_score(y_test, y_pred)
-print(f'Accuracy: {accuracy}')
-print('Classification Report:')
-print(classification_report(y_test, y_pred))
+st.subheader('Model Evaluation:')
+st.write(f'Accuracy: {accuracy}')
+st.write('Classification Report:')
+st.code(classification_report(y_test, y_pred))
 
 # Integrate with maintenance workflow (replace this with your actual implementation)
+st.subheader('Maintenance Workflow:')
 if any(y_pred == 1):
-    print('Maintenance alert: Predicted equipment failure. Schedule preventive maintenance.')
+    st.warning('Maintenance alert: Predicted equipment failure. Schedule preventive maintenance.')
 else:
-    print('No maintenance needed.')
+    st.success('No maintenance needed.')
+
+# Optionally, you can save the trained model for future use
+# import joblib
+# joblib.dump(model, 'predictive_maintenance_model.joblib')
